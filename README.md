@@ -15,8 +15,9 @@ The following libraries were used: `nltp`, `spacy`, `sklearn`, `numpy`, `matplot
 1. **Preprocessing** (lemmatization and normalization)
 2. **Embedding** - `all-MiniLM-L6-v2` model
 3. **Non-linear Dimensionality Reduction** - UMAP
-4. **Clustering** - KMeans
-5. **Labeling clusters** - KeyBERT
+4. **Define best number of clusters** with **Silhoutte score**
+5. **Clustering** - KMeans
+6. **Labeling clusters** - KeyBERT
 
 ![alt text](images/image.png)
 
