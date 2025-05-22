@@ -8,6 +8,8 @@ that will make us enjoy and thrive at the same time.
 Clusterly will help you to automatically organize your thoughts in the vector space,
 group, band and label the groups using NLP techniques.
 
+The following libraries were used: `nltp`, `spacy`, `sklearn`, `numpy`, `matplotlib`, `tkinter`, `sentence_transformers`, `umap`, `loguru`.
+
 ## The process
 
 1. **Preprocessing** (lemmatization and normalization)
@@ -17,3 +19,29 @@ group, band and label the groups using NLP techniques.
 5. **Labeling clusters** - KeyBERT
 
 ![alt text](images/image.png)
+
+## How to run?
+
+**1. Clone:**
+
+```
+git clone git@github.com:montarelab/clusterly.git
+```
+
+**2. Install requirements**
+
+```
+pip install -r requirements.txt
+```
+
+**3. Go to `src`:**
+
+```
+cd src
+```
+
+**4. Run app**
+
+```
+python app.py
+```
