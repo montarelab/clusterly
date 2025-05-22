@@ -5,6 +5,7 @@ from keybert import KeyBERT
 import matplotlib.pyplot as plt
 from scipy.spatial import ConvexHull
 import numpy as np
+from sklearn.metrics import silhouette_score
 
 
 # Preprocessing: lowercasing, removing stopwords, lemmatization
@@ -28,9 +29,21 @@ def reduce_dimensionality(embeddings):
     return reducer.fit_transform(embeddings)
 
 # Clustering: using KMeans
-def cluster_embeddings(embedding_2d, n_clusters=3):
-    kmeans = KMeans(n_clusters=n_clusters, random_state=42)
-    return kmeans.fit_predict(embedding_2d)
+def get_best_k_and_clusters(embeddings, k_range=range(2, 10)):
+    best_k = None
+    best_score = -1
+    best_clusters = None
+
+    for k in k_range:
+        kmeans = KMeans(n_clusters=k, random_state=42, n_init='auto')
+        labels = kmeans.fit_predict(embeddings)
+        score = silhouette_score(embeddings, labels)
+        if score > best_score:
+            best_k = k
+            best_score = score
+            best_clusters = labels
+
+    return best_k, best_clusters
 
 # Labeling: using KeyBERT
 def label_clusters(model, n_clusters, clusters, input_ideas):
@@ -85,7 +98,6 @@ def ml_pipeline(plot, nlp, stop_words, input_ideas):
     embeddings, model = embedding(preprocessed_text, embedding_model_name)
     embedding_2d = reduce_dimensionality(embeddings)
 
-    n_clusters = 3
-    clusters = cluster_embeddings(embedding_2d, n_clusters)
+    n_clusters, clusters = get_best_k_and_clusters(embedding_2d)
     labels = label_clusters(model, n_clusters, clusters, input_ideas)
     plot_clusters(plot, embedding_2d, clusters, labels, input_ideas)
